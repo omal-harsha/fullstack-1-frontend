@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const cors = require("cors");
+require("dotenv").config();
 
 app.use(express.json());
 app.use(cors());
@@ -17,10 +18,14 @@ app.use("/Comments", commentsRouter)
 const usersRouter = require('./routes/Users')
 app.use("/auth", usersRouter)
 
-db.sequelize.sync().then(()=> {
+db.sequelize
+.sync()
+.then((req)=> {
  
     app.listen( process.env.PORT || 3001, ()=> {
         console.log("Server runnging... ")
     })
+}).catch((err) => {
+    console.log(err);
 })
 
